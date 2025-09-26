@@ -38,10 +38,22 @@ understand the expansion of the universe through the study of galaxy spectra.
 st.image(IMAGE_ADDRESS, 
          caption="Redshift")
 
-if not st.user.is_logged_in:
+
+import streamlit as st
+
+#st.image("your_logo.png", caption="Redshift")
+
+# Safely check login state
+user_logged_in = False
+if hasattr(st, "user"):
+    user_logged_in = getattr(st.user, "is_logged_in", False)
+
+if not user_logged_in:
     if st.sidebar.button("Log in with Google", type="primary", icon=":material/login:"):
         st.login()
-else:
-    if st.sidebar.button("Log out", type="secondary", icon=":material/logout:"):
-        st.logout()
         st.stop()
+else:
+    st.success(f"Welcome, {st.user.email} 👋")
+    # Continue with the rest of your app here
+
+
